@@ -15,11 +15,11 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
-import { signOut, getAuth } from "@/lib/firebase";
+import { signOut, getAuth, isDemoMode } from "@/lib/firebase";
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { user, loading } = useAuth();
+  const { user, loading, logoutDemo } = useAuth();
   const [image, setImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState("");
   const [analyzing, setAnalyzing] = useState(false);
@@ -92,7 +92,12 @@ export default function DashboardPage() {
   };
 
   const handleSignOut = async () => {
-    await signOut(getAuth());
+    if (isDemoMode) {
+      logoutDemo();
+    } else {
+      const auth = getAuth();
+      if (auth) await signOut(auth);
+    }
     router.push("/");
   };
 

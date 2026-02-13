@@ -10,6 +10,7 @@ import {
   signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  isDemoMode,
 } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 
@@ -30,7 +31,7 @@ export default function LoginPage() {
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { user, loading } = useAuth();
+  const { user, loading, isDemo, loginAsDemo } = useAuth();
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,15 +46,26 @@ function LoginForm() {
     if (!loading && user) router.push("/dashboard");
   }, [user, loading, router]);
 
+  const handleDemoLogin = () => {
+    loginAsDemo();
+    router.push("/dashboard");
+  };
+
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSubmitting(true);
     try {
+      const auth = getAuth();
+      if (!auth) {
+        setError("Firebase not configured. Use 'Try Demo' instead.");
+        setSubmitting(false);
+        return;
+      }
       if (isSignUp) {
-        await createUserWithEmailAndPassword(getAuth(), email, password);
+        await createUserWithEmailAndPassword(auth, email, password);
       } else {
-        await signInWithEmailAndPassword(getAuth(), email, password);
+        await signInWithEmailAndPassword(auth, email, password);
       }
       router.push("/dashboard");
     } catch (err: unknown) {
@@ -67,7 +79,12 @@ function LoginForm() {
   const handleGoogleAuth = async () => {
     setError("");
     try {
-      await signInWithPopup(getAuth(), googleProvider);
+      const auth = getAuth();
+      if (!auth || !googleProvider) {
+        setError("Firebase not configured. Use 'Try Demo' instead.");
+        return;
+      }
+      await signInWithPopup(auth, googleProvider);
       router.push("/dashboard");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Google sign-in failed";
@@ -99,6 +116,24 @@ function LoginForm() {
 
         {/* Card */}
         <div className="rounded-2xl border border-border bg-white p-8 shadow-sm">
+          {/* Demo Mode Banner */}
+          {isDemo && (
+            <div className="mb-6">
+              <button
+                onClick={handleDemoLogin}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white hover:bg-emerald-700 transition-colors"
+              >
+                <Shield className="h-4 w-4" />
+                Try Demo (No account needed)
+              </button>
+              <div className="mt-4 flex items-center gap-3">
+                <div className="h-px flex-1 bg-border" />
+                <span className="text-xs text-muted">or sign in with Firebase</span>
+                <div className="h-px flex-1 bg-border" />
+              </div>
+            </div>
+          )}
+
           {/* Google Sign In */}
           <button
             onClick={handleGoogleAuth}

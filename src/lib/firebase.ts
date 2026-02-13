@@ -1,6 +1,6 @@
 import { initializeApp, getApps, type FirebaseApp } from "firebase/app";
 import {
-  getAuth,
+  getAuth as _getAuth,
   GoogleAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
@@ -18,10 +18,14 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
+// Demo mode: true when Firebase env vars are not configured
+export const isDemoMode = !firebaseConfig.apiKey || firebaseConfig.apiKey === "your_api_key";
+
 let app: FirebaseApp | undefined;
 let auth: Auth | undefined;
 
 function getFirebaseApp() {
+  if (isDemoMode) return undefined;
   if (!app) {
     app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
   }
@@ -29,13 +33,16 @@ function getFirebaseApp() {
 }
 
 function getFirebaseAuth() {
+  if (isDemoMode) return null;
   if (!auth) {
-    auth = getAuth(getFirebaseApp());
+    const firebaseApp = getFirebaseApp();
+    if (!firebaseApp) return null;
+    auth = _getAuth(firebaseApp);
   }
   return auth;
 }
 
-const googleProvider = new GoogleAuthProvider();
+const googleProvider = isDemoMode ? null : new GoogleAuthProvider();
 
 export {
   getFirebaseAuth as getAuth,
