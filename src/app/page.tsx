@@ -15,6 +15,10 @@ import {
   ClipboardCheck,
   Star,
   ExternalLink,
+  AlertTriangle,
+  AlertCircle,
+  Info,
+  MousePointer2,
 } from "lucide-react";
 
 export default function LandingPage() {
@@ -225,6 +229,184 @@ export default function LandingPage() {
                   {item.title}
                 </h3>
                 <p className="text-sm text-muted leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* See It In Action — Before / After */}
+      <section className="py-24 px-6 bg-gradient-to-b from-white via-primary/[0.02] to-surface">
+        <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-2xl text-center mb-16">
+            <div className="mb-4 inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-semibold text-accent uppercase tracking-wider">
+              See It In Action
+            </div>
+            <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">
+              From screenshot to{" "}
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                actionable insights
+              </span>
+            </h2>
+            <p className="text-muted text-lg">
+              Upload any UI — ShipCheck scans every pixel and highlights exactly what needs fixing.
+            </p>
+          </div>
+
+          {/* Before / After comparison */}
+          <div className="relative mx-auto max-w-5xl">
+            <div className="relative rounded-2xl border border-border/60 bg-white shadow-2xl shadow-black/10 overflow-hidden">
+              {/* Browser chrome */}
+              <div className="flex items-center gap-2 border-b border-border/60 bg-surface px-4 py-3">
+                <div className="flex gap-1.5">
+                  <div className="h-3 w-3 rounded-full bg-red-400" />
+                  <div className="h-3 w-3 rounded-full bg-yellow-400" />
+                  <div className="h-3 w-3 rounded-full bg-green-400" />
+                </div>
+                <div className="mx-auto flex items-center gap-2 rounded-lg bg-white border border-border/60 px-4 py-1.5 text-xs text-muted">
+                  <Shield className="h-3 w-3 text-primary" />
+                  app.shipcheck.design/scan-results
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2">
+                {/* Before — Original */}
+                <div className="border-r border-border/60 p-6 md:p-8">
+                  <div className="flex items-center gap-2 mb-5">
+                    <div className="h-2 w-2 rounded-full bg-muted/50" />
+                    <span className="text-xs font-semibold text-muted uppercase tracking-wider">Original Screenshot</span>
+                  </div>
+                  {/* Mock UI card */}
+                  <div className="rounded-xl border border-border bg-gradient-to-br from-slate-50 to-white p-5 space-y-4">
+                    {/* Mock header */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="h-8 w-8 rounded-lg bg-indigo-100" />
+                        <div className="space-y-1">
+                          <div className="h-2.5 w-24 rounded bg-foreground/80" />
+                          <div className="h-2 w-16 rounded bg-muted/30" />
+                        </div>
+                      </div>
+                      <div className="h-7 w-16 rounded-lg bg-indigo-100" />
+                    </div>
+                    {/* Mock form */}
+                    <div className="space-y-3">
+                      <div className="h-9 w-full rounded-lg border border-border bg-white flex items-center px-3">
+                        <span className="text-[10px] text-muted/40">Enter your email...</span>
+                      </div>
+                      <div className="h-9 w-full rounded-lg border border-border bg-white flex items-center px-3">
+                        <span className="text-[10px] text-muted/40">Password</span>
+                      </div>
+                      <div className="h-9 w-full rounded-lg bg-indigo-500 flex items-center justify-center">
+                        <span className="text-[10px] text-white font-medium">Sign In</span>
+                      </div>
+                    </div>
+                    {/* Mock footer */}
+                    <div className="flex items-center justify-between pt-2">
+                      <div className="h-2 w-20 rounded bg-muted/20" />
+                      <div className="flex gap-2">
+                        <div className="h-6 w-6 rounded-full bg-gray-100" />
+                        <div className="h-6 w-6 rounded-full bg-gray-100" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* After — Annotated */}
+                <div className="p-6 md:p-8 bg-gradient-to-br from-primary/[0.02] to-transparent">
+                  <div className="flex items-center gap-2 mb-5">
+                    <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+                    <span className="text-xs font-semibold text-primary uppercase tracking-wider">ShipCheck Analysis</span>
+                  </div>
+                  {/* Same Mock UI card but with annotations */}
+                  <div className="relative rounded-xl border border-primary/20 bg-gradient-to-br from-slate-50 to-white p-5 space-y-4">
+                    {/* Annotation overlays */}
+                    {/* Mock header */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="h-8 w-8 rounded-lg bg-indigo-100" />
+                        <div className="space-y-1">
+                          <div className="h-2.5 w-24 rounded bg-foreground/80" />
+                          <div className="h-2 w-16 rounded bg-muted/30" />
+                        </div>
+                      </div>
+                      <div className="relative h-7 w-16 rounded-lg bg-indigo-100">
+                        <div className="absolute -top-1 -right-1 h-3.5 w-3.5 rounded-full bg-blue-500 border-2 border-white flex items-center justify-center">
+                          <span className="text-[6px] text-white font-bold">3</span>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Mock form with annotations */}
+                    <div className="space-y-3">
+                      <div className="relative h-9 w-full rounded-lg border-2 border-red-400 bg-red-50/50 flex items-center px-3">
+                        <span className="text-[10px] text-muted/40">Enter your email...</span>
+                        <div className="absolute -top-1 -right-1 h-3.5 w-3.5 rounded-full bg-red-500 border-2 border-white flex items-center justify-center">
+                          <span className="text-[6px] text-white font-bold">1</span>
+                        </div>
+                      </div>
+                      <div className="relative h-9 w-full rounded-lg border-2 border-red-400 bg-red-50/50 flex items-center px-3">
+                        <span className="text-[10px] text-muted/40">Password</span>
+                        <div className="absolute -top-1 -right-1 h-3.5 w-3.5 rounded-full bg-red-500 border-2 border-white flex items-center justify-center">
+                          <span className="text-[6px] text-white font-bold">1</span>
+                        </div>
+                      </div>
+                      <div className="h-9 w-full rounded-lg bg-indigo-500 flex items-center justify-center">
+                        <span className="text-[10px] text-white font-medium">Sign In</span>
+                      </div>
+                    </div>
+                    {/* Mock footer with annotation */}
+                    <div className="flex items-center justify-between pt-2">
+                      <div className="h-2 w-20 rounded bg-muted/20" />
+                      <div className="relative flex gap-2">
+                        <div className="h-6 w-6 rounded-full bg-gray-100 border-2 border-orange-400" />
+                        <div className="h-6 w-6 rounded-full bg-gray-100 border-2 border-orange-400" />
+                        <div className="absolute -top-1 -right-1 h-3.5 w-3.5 rounded-full bg-orange-500 border-2 border-white flex items-center justify-center">
+                          <span className="text-[6px] text-white font-bold">2</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Scan line animation effect */}
+                    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-primary to-transparent opacity-50" />
+                  </div>
+
+                  {/* Issue Summary Cards */}
+                  <div className="mt-4 space-y-2">
+                    <div className="flex items-center gap-2 rounded-lg bg-red-50 border border-red-100 px-3 py-2">
+                      <AlertTriangle className="h-3 w-3 text-red-500 flex-shrink-0" />
+                      <span className="text-[10px] text-red-700 font-medium">Low contrast placeholder text (2.6:1)</span>
+                      <span className="ml-auto rounded-full bg-red-100 px-1.5 py-0.5 text-[8px] font-bold text-red-600">1</span>
+                    </div>
+                    <div className="flex items-center gap-2 rounded-lg bg-orange-50 border border-orange-100 px-3 py-2">
+                      <AlertCircle className="h-3 w-3 text-orange-500 flex-shrink-0" />
+                      <span className="text-[10px] text-orange-700 font-medium">Icon buttons missing aria-labels</span>
+                      <span className="ml-auto rounded-full bg-orange-100 px-1.5 py-0.5 text-[8px] font-bold text-orange-600">2</span>
+                    </div>
+                    <div className="flex items-center gap-2 rounded-lg bg-blue-50 border border-blue-100 px-3 py-2">
+                      <Info className="h-3 w-3 text-blue-500 flex-shrink-0" />
+                      <span className="text-[10px] text-blue-700 font-medium">Inconsistent border radius (12px vs 8px)</span>
+                      <span className="ml-auto rounded-full bg-blue-100 px-1.5 py-0.5 text-[8px] font-bold text-blue-600">3</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom glow */}
+            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-16 bg-primary/10 rounded-full blur-2xl" />
+          </div>
+
+          {/* Stats bar */}
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 mx-auto max-w-4xl">
+            {[
+              { value: "< 30s", label: "Average scan time" },
+              { value: "7", label: "QA categories checked" },
+              { value: "94%", label: "Issues caught pre-launch" },
+              { value: "100", label: "Quality score scale" },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="text-2xl font-bold text-foreground md:text-3xl">{stat.value}</div>
+                <div className="mt-1 text-xs text-muted">{stat.label}</div>
               </div>
             ))}
           </div>
